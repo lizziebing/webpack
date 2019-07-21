@@ -1,6 +1,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -12,8 +13,27 @@ module.exports = {
             title: 'Production'
         })
     ],
+    optimization: {
+        splitChunks: {
+            cacheGroups: { 
+                commons: {
+                    name: "commons",
+                    chunks: "all", 
+                    minChunks: 2,
+                    priority: 0 
+                },
+                vendor: { 
+                    name: 'vendor',
+                    test: /[\\/]node_modules[\\/]/,
+                    chunks: 'all', 
+                    priority: 10 
+                }
+            }
+        }
+    },
     output: {
         filename: '[name].bundle.js',
+        chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {

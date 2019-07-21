@@ -8,14 +8,16 @@ if(process.env.NODE_ENV !== 'production') {
   console.log('Looks like we are in development mode!');
 }
 
-function component() {
-  // var element = document.createElement('div');
+async function component() {
+  var element = document.createElement('div');
   // var btn = document.createElement('button');
 
   //- Lodash（目前通过一个 script 脚本引入）对于执行这一行是必需的
   // Lodash, now imported by this script
-  // element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  // element.classList.add('hello');
+
+  const _ = await import(/* webpackChunkName: "lodash" */ 'lodash'); //动态导入模块的方式引入lodash. 在注释中使用了 webpackChunkName。这样做会导致我们的 bundle 被命名为 lodash.bundle.js
+  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+  element.classList.add('hello');
 
   // btn.innerHTML = 'Click me and check the console!';
   // btn.onclick = printMe;
@@ -25,11 +27,11 @@ function component() {
   // myIcon.src = Icon;
   // element.appendChild(myIcon);
 
-  var element = document.createElement('pre');
-  element.innerHTML = [
-    'Hello webpack!',
-    '5 cubed is equal to ' + cube(5)
-  ].join('\n\n');
+  // var element = document.createElement('pre');
+  // element.innerHTML = [
+  //   'Hello webpack!',
+  //   '5 cubed is equal to ' + cube(5)
+  // ].join('\n\n');
 
   return element;
 }
