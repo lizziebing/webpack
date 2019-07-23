@@ -1,0 +1,14 @@
+/*
+支持 JSX，并将 TypeScript 编译到 ES5
+*/
+{
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "module": "es6",
+      "target": "es5",
+      "jsx": "react",
+      "allowJs": true
+    }
+}

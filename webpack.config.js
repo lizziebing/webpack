@@ -6,13 +6,7 @@ const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-    entry: {
-        main: './src/index.js',
-        vendor: [
-            'lodash'
-        ]
-        // print: './src/print.js'
-    },
+    entry: './src/index.ts',
     mode:"development",
     devtool: 'inline-source-map',
     devServer: {
@@ -58,6 +52,11 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            },
+            {
                 test: /\.css$/,
                 use: [
                     'style-loader',
@@ -77,5 +76,8 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    resolve: {
+        extensions: [ '.tsx', '.ts', '.js' ]
+    },
 }
