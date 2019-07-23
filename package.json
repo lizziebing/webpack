@@ -6,9 +6,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "webpack-dev-server --open --config webpack.config.js",
     "server": "node server.js",
-    "dev": "node dev-server.js"
+    "dev": "node dev-server.js",
+    "dist-start": "http-server dist"
   },
   "keywords": [],
   "author": "",
@@ -20,12 +21,14 @@
     "express": "^4.17.1",
     "file-loader": "^4.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "http-server": "^0.11.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-dev-server": "^3.7.2",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "dependencies": {
     "lodash": "^4.17.14",

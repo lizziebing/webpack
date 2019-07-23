@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -21,17 +22,35 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Catching'
+            title: 'Progressive Web Application'
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest'
+        new WorkboxPlugin.GenerateSW({
+            // 这些选项帮助 ServiceWorkers 快速启用
+            // 不允许遗留任何“旧的” ServiceWorkers
+            clientsClaim: true,
+            skipWaiting: true
         })
         // new webpack.NamedModulesPlugin(), //开启 HMR 的时候使用该插件会显示模块的相对路径，建议用于开发环境
         // new webpack.HotModuleReplacementPlugin(), //模块热替换
+
     ],
+    optimization: {
+        splitChunks: { 
+            chunks: "initial", 
+            cacheGroups: {
+                priority: "0", 
+                vendor: {
+                    chunks: "initial",
+                    test: /react|lodash/, 
+                    name: "vendor",
+                    minSize: 0,
+                    minChunks: 1,
+                    enforce: true,
+                    reuseExistingChunk: true   // 可设置是否重用已用chunk 不再创建新的chunk
+                }
+            }    
+        }
+    },
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist')
